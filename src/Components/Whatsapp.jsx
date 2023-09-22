@@ -44,7 +44,7 @@ const Whatsapp = () => {
                   key={key} // Add a unique key for each button
                 >
                   <span className=" w-10 h-10 bg-gray-600 flex justify-center items-center rounded-full text-white">
-                    {res.chatId.substring(0, 1)}
+                    {res?.chatId?.substring(0, 1) || "null"}
                   </span>
                   {res.chatId}
                   <br />

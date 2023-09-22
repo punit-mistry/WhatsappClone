@@ -108,6 +108,77 @@ const SendMessage = () => {
     setPreviewMessage(replacedRows);
   };
 
+  const SendmessageAll = () => {
+    const Data = PreviewMessage.map((res) => ({
+      message: res.Message,
+      DriverNumbers: [String(res.Number)],
+    }));
+
+    Data.forEach((res) => {
+      const data = JSON.stringify({
+        message: res.message,
+        DriverNumbers: res.DriverNumbers, // Access the number to send the message to
+      });
+
+      console.log(data);
+
+      const config = {
+        method: "post",
+        maxBodyLength: Infinity,
+        url: "http://localhost:3000/send-message",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+
+      axios
+        .request(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+          if (response.status === 200) {
+            setResponseData(response.data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
+  };
+
+  const SendMessageSingle = (res) => {
+    const Data = {
+      message: res.Message,
+      DriverNumbers: [String(res.Number)],
+    };
+
+    const data = JSON.stringify(Data);
+
+    console.log(data);
+
+    const config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "http://localhost:3000/send-message",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        if (response.status === 200) {
+          setResponseData(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <>
       <Navbar />
@@ -133,10 +204,6 @@ const SendMessage = () => {
             </button>
           </div>
 
-          <button className="bg-green-500 p-2 font-bold text-white w-52 rounded-lg">
-            Show Preview
-          </button>
-
           {ExcelFile.length > 0 ? (
             <>
               <div className="flex">
@@ -157,7 +224,7 @@ const SendMessage = () => {
                       className="bg-blue-500 p-2 font-bold text-white w-52 rounded-lg"
                       onClick={ExcelResponseSend}
                     >
-                      Send
+                      Show Preview
                     </button>
                   </div>
 
@@ -170,7 +237,6 @@ const SendMessage = () => {
                               {cellHeader}
                             </th>
                           ))}
-                          <th className="border border-black">Button</th>
                         </tr>
                       );
                     })}
@@ -189,33 +255,48 @@ const SendMessage = () => {
                               {cell}
                             </td>
                           ))}
-                          <td className="border border-black ">
-                            <button className="bg-blue-600 p-3 w-24 text-white font-bold rounded-lg hover:bg-blue-900 transition-all">
-                              Send
-                            </button>
-                          </td>
                         </tr>
                       ))}
                   </table>
                 </div>
 
-                <div className="w-1/2 p-10">
-                  {PreviewMessage.map((res) => (
-                    <div
-                      className="bg-amber-50 w-80 h-96 rounded-lg flex flex-col gap-5"
-                      key={res.id}
-                    >
-                      <div className="h-16 bg-gray-300 flex items-center gap-5">
-                        <div className="bg-gray-600 w-10 flex items-center justify-center text-3xl h-10 ml-5 text-white rounded-full">
-                          A
+                <div className="w-1/2 p-10 flex flex-col gap-10">
+                  <button
+                    className="bg-red-500 p-2 font-bold text-white w-52 rounded-lg"
+                    onClick={SendmessageAll}
+                  >
+                    {" "}
+                    Send All
+                  </button>
+                  <div className="flex gap-10">
+                    {PreviewMessage.map((res) => (
+                      <div
+                        className="bg-amber-50 w-80 h-96 rounded-lg flex flex-col  justify-between gap-5"
+                        key={res.id}
+                      >
+                        <div className="flex flex-col gap-3">
+                          <div className="h-16 bg-gray-300 flex items-center gap-5">
+                            <div className="bg-green-600 w-10 flex items-center justify-center text-3xl h-10 ml-5 text-white rounded-full">
+                              A
+                            </div>
+                            <span className="font-bold">+{res.Number}</span>
+                          </div>
+                          <div className="bg-green-500 w-fit h-10 flex items-center p-2 rounded-full  rounded-bl-none ml-3">
+                            {res.Message}
+                          </div>
                         </div>
-                        <span className="font-bold">+{res.Number}</span>
+                        <div className="flex items-center justify-center h-20">
+                          <button
+                            className="bg-green-500 w-32 text-white font-bold h-10 rounded-lg "
+                            onClick={() => SendMessageSingle(res)}
+                          >
+                            {" "}
+                            send
+                          </button>
+                        </div>
                       </div>
-                      <div className="bg-green-500 w-fit p-5 rounded-full rounded-bl-none">
-                        {res.Message}
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </>

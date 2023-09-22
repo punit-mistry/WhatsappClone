@@ -16,8 +16,9 @@ const Message = ({ Data, Name }) => {
 
     const data = {
       message: Message,
-      DriverNumber: Name.number,
+      DriverNumbers: [Name.number.split("@")[0]],
     };
+    console.log(data);
 
     let config = {
       method: "post",

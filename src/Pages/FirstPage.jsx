@@ -29,9 +29,7 @@ const FirstPage = () => {
       {QrData != "Set Qr Code" && (
         <div className="flex justify-center items-center h-[100vh]">
           <QRCodeSVG
-            value={
-              "2@L1IiBykovNwCHBz3rgJ/PVYph0ByWsa+QWnSZzP3BtN2oUHhPAiDaRUSM5yh9N8UqEydflTDFSlKrQ==,a2gyw247em1g97R/BwNOJhajhmkCFfapZUfI7fZCISo=,zuXChC+t/ECSFwBieVTaQpZ6fLCAdvrxpquQ57JTdRw=,FDg93k0D3VdVh8a+1X1QvP6Y2qsD2pV989/DyGeuFpY=,1"
-            }
+            value={QrData}
             size="500"
           />
         </div>

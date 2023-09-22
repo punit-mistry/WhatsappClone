@@ -33,20 +33,20 @@ app.get('/qrcode', async (req, res) => {
         resolve();
       });
     });
-
+    
     // Listen for the 'authenticated' event to know when WhatsApp is ready
     client.on('authenticated', (session) => {
       console.log('WhatsApp authenticated');
       isWhatsAppReady = true; // Set WhatsApp as ready when authenticated
-
+      
       // Send the QR code data as JSON once authenticated
-      res.json({ qrCodeData: qrData });
     });
-
-
+    
+    
     // Initialize the WhatsApp client
     client.initialize();
-
+    
+    res.json({ qrCodeData: qrData });
     // Wait for the QR code to be generated before sending the response
     await waitForQRCode;
   } else {
