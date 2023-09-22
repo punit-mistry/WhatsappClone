@@ -8,7 +8,9 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-backend
+backend/node_modules
+backend/.wwebjs_auth
+backend/.wwebjs_cache
 dist
 dist-ssr
 *.local
