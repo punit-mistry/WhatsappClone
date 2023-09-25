@@ -16,7 +16,7 @@ const FirstPage = () => {
       let config = {
         method: "post",
         maxBodyLength: Infinity,
-        url: "http://localhost:3000/qrcode",
+        url: "https://0919-203-122-54-18.ngrok-free.app/qrcode",
         headers: {
           "Content-Type": "application/json",
         },
