@@ -3,10 +3,15 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <div className=" p-3 bg-green-500 text-white font-bold flex justify-between items-center">
-      <div>Logo</div>
+      <div>
+        <img
+          src="https://o.remove.bg/downloads/6981a2bb-dbb9-463b-b553-fbc76508af7d/png-transparent-whatsapp-logo-computer-icons-whatsapp-whatsapp-text-android-symbol-thumbnail-removebg-preview.png"
+          className="w-16"
+        />
+      </div>
       <div className="flex gap-5">
         <div>
-          <Link to="/"> Messages </Link>
+          <Link to="/qrcode"> Messages </Link>
         </div>
         <div>
           {" "}

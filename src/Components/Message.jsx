@@ -15,8 +15,9 @@ const Message = ({ Data, Name }) => {
     setNewData([...NewData, newMessage]);
 
     const data = {
+      clientName: sessionStorage.getItem("clientName"),
       message: Message,
-      DriverNumbers: [Name.number.split("@")[0]],
+      DriverNumbers: [Name.number],
     };
     console.log(data);
 

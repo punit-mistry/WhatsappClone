@@ -1,19 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import axios from "axios";
+
 import Whatsapp from "../Components/Whatsapp";
 import Navbar from "../Components/Navbar";
 const FirstPage = () => {
   const [QrData, setQrData] = useState("");
-
+  const [ClientName, setClientName] = useState("");
   const FetchQrCode = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/qrcode");
-      if (response.data.qrCodeData) {
-        setQrData(response.data.qrCodeData);
-      } else {
-        setQrData("Set Qr Code");
-      }
+      let data = JSON.stringify({
+        clientName: sessionStorage.getItem("clientName"),
+      });
+
+      let config = {
+        method: "post",
+        maxBodyLength: Infinity,
+        url: "http://localhost:3000/qrcode",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+
+      axios
+        .request(config)
+        .then((response) => {
+          if (response.data.qrCodeData) {
+            console.log("qrcode", response.data.qrCodeData);
+            setQrData(response.data.qrCodeData);
+          } else {
+            setQrData("Set Qr Code");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } catch (error) {
       console.log(error);
     }

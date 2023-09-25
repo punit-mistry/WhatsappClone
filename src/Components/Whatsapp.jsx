@@ -10,7 +10,11 @@ const Whatsapp = () => {
 
   const FetchAll = async () => {
     try {
-      const Response = await axios.get("http://localhost:3000/chat/history");
+      const Response = await axios.get(
+        `http://localhost:3000/chat/history?clientName=${sessionStorage.getItem(
+          "clientName"
+        )}`
+      );
       setAllHistory(Response.data);
     } catch (e) {
       console.log(e.message);
@@ -24,7 +28,9 @@ const Whatsapp = () => {
   const CallChats = async (a, name) => {
     setChatName({ name: name, number: a });
     const response = await axios.get(
-      `http://localhost:3000/chat/messages/${a}`
+      `http://localhost:3000/chat/messages/${sessionStorage.getItem(
+        "clientName"
+      )}/${a}`
     );
     console.log(response.data, name);
     setChats(response.data);
