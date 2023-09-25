@@ -42,6 +42,9 @@ const FirstPage = () => {
   };
 
   useEffect(() => {
+    setInterval(() => {
+      FetchQrCode();
+    }, 60000);
     FetchQrCode();
   }, []);
 
