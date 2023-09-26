@@ -24,7 +24,7 @@ const Message = ({ Data, Name }) => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://0b8a-203-122-54-18.ngrok-free.app/send-message",
+      url: "https://3a45-203-122-54-18.ngrok-free.app/send-message",
       headers: {
         "Content-Type": "application/json",
       },
