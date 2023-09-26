@@ -42,6 +42,7 @@ const SendMessage = () => {
     const Numbers = Data.Number.map((Res) => Res);
 
     let data = JSON.stringify({
+      clientName: sessionStorage.getItem("clientName"),
       message: Data.Message,
       DriverNumbers: Numbers[0],
     });
@@ -110,6 +111,7 @@ const SendMessage = () => {
 
   const SendmessageAll = () => {
     const Data = PreviewMessage.map((res) => ({
+      clientName: sessionStorage.getItem("clientName"),
       message: res.Message,
       DriverNumbers: [String(res.Number)],
     }));
