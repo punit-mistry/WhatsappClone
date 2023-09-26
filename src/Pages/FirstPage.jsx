@@ -6,7 +6,7 @@ import Whatsapp from "../Components/Whatsapp";
 import Navbar from "../Components/Navbar";
 const FirstPage = () => {
   const [QrData, setQrData] = useState("");
-  const [ClientName, setClientName] = useState("");
+  const [ClientReady, setClientReady] = useState(false);
   const FetchQrCode = async () => {
     try {
       let data = JSON.stringify({
@@ -16,7 +16,7 @@ const FirstPage = () => {
       let config = {
         method: "post",
         maxBodyLength: Infinity,
-        url: "https://0919-203-122-54-18.ngrok-free.app/qrcode",
+        url: "https://0b8a-203-122-54-18.ngrok-free.app/qrcode",
         headers: {
           "Content-Type": "application/json",
         },
@@ -26,7 +26,7 @@ const FirstPage = () => {
       axios
         .request(config)
         .then((response) => {
-          if (response.data.qrCodeData) {
+          if (response.data.qrCodeData !== "") {
             console.log("qrcode", response.data.qrCodeData);
             setQrData(response.data.qrCodeData);
           } else {
@@ -42,9 +42,6 @@ const FirstPage = () => {
   };
 
   useEffect(() => {
-    setInterval(() => {
-      FetchQrCode();
-    }, 60000);
     FetchQrCode();
   }, []);
 

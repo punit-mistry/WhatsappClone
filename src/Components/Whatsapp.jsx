@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Message from "./Message";
-
+import { useNavigate } from "react-router-dom";
 const Whatsapp = () => {
+  const Nav = useNavigate();
   const [AllHistory, setAllHistory] = useState([]);
   const [Chats, setChats] = useState([]);
   const [ChatName, setChatName] = useState({ name: "", number: "" });
@@ -11,11 +12,21 @@ const Whatsapp = () => {
   const FetchAll = async () => {
     try {
       const Response = await axios.get(
-        `https://0919-203-122-54-18.ngrok-free.app/chat/history?clientName=${sessionStorage.getItem(
+        `https://0b8a-203-122-54-18.ngrok-free.app/chat/history?clientName=${sessionStorage.getItem(
           "clientName"
-        )}`
+        )}`,
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "true",
+          },
+        }
       );
-      setAllHistory(Response.data);
+
+      if (Response.data.length > 0) {
+        setAllHistory(Response.data);
+      } else {
+        Nav("/qrcode");
+      }
     } catch (e) {
       console.log(e.message);
     }
@@ -28,9 +39,14 @@ const Whatsapp = () => {
   const CallChats = async (a, name) => {
     setChatName({ name: name, number: a });
     const response = await axios.get(
-      `https://0919-203-122-54-18.ngrok-free.app/chat/messages/${sessionStorage.getItem(
+      `https://0b8a-203-122-54-18.ngrok-free.app/chat/messages/${sessionStorage.getItem(
         "clientName"
-      )}/${a}`
+      )}/${a}`,
+      {
+        headers: {
+          "ngrok-skip-browser-warning": "true",
+        },
+      }
     );
     console.log(response.data, name);
     setChats(response.data);
@@ -45,7 +61,7 @@ const Whatsapp = () => {
             AllHistory.map((res, key) => {
               return (
                 <button
-                  className="h-16 border w-80 font-bold p-2 hover:bg-green-500  transition-all flex gap-5 items-center"
+                  className="h-16 border-b-2 w-[20vw] font-bold p-2 hover:bg-green-500  transition-all flex gap-5 items-center"
                   onClick={() => CallChats(res.number._serialized, res.chatId)}
                   key={key} // Add a unique key for each button
                 >
@@ -73,7 +89,7 @@ const Whatsapp = () => {
               height={500}
             />
             <span className="text-3xl font-thin">
-              Download WhatsApp for Windows
+              Download What chat for Windows
             </span>
           </div>
         )}

@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 const port = 3000;
+const Data = require('./Data')
 // Enable CORS for all routes
 app.use(cors());
 
@@ -14,30 +15,42 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 const clients = {};
 
-let isWhatsAppReady = {
-  Name:"",
-  ready: false, 
-};
+app.post('/Login', async (req, res) => {
+  const { userName, Password } = req.body;
+
+  // Filter the data based on userName and Password (case-sensitive)
+  const user = Data.find((item) => item.userName === userName && item.password === Password);
+
+  if (user) {
+    // User is found
+    res.status(200).send({ Message: 'Login successful', user });
+  } else {
+    // User is not found
+    res.status(401).send({ Message: 'Login failed' });
+  }
+});
+
 
 app.post('/qrcode', async (req, res) => {
   const { clientName } = req.body;
-
   if (!clientName) {
     return res.status(400).json({ error: 'Client name is required in the request body.' });
   }
 
   if (!clients[clientName]) {
-    console.log(`Initializing client for ${clientName}`);
     clients[clientName] = {
       instance: new Client({
         authStrategy: new LocalAuth({ clientId: clientName }),
       }),
       isWhatsAppReady: false,
     };
-    isWhatsAppReady=true;
+  }
+
+  if (!clients[clientName].isWhatsAppReady) {
+    console.log(`Initializing client for ${clientName}`);
+ 
     clients[clientName].instance.on('qr', (qr) => {
       console.log(qr);
-      qrcode.generate(qr, { small: true });
 
       // Send the QR code data to the client
       console.log(`Sending QR code data for ${clientName}`);
@@ -50,17 +63,19 @@ app.post('/qrcode', async (req, res) => {
 
       // After authentication, you can choose to send a different response if needed
       console.log(`WhatsApp for ${clientName} is already ready.`);
-  
+
+      // Send a response here if needed
     });
 
     clients[clientName].instance.initialize();
   } else {
-   
-      // Send an empty JSON object to indicate that the client is not ready yet
-      console.log(`Client ${clientName} is not yet ready.`);
-      res.status(200).json({qrCodeData:``});
+    // Send an empty JSON object to indicate that the client is not ready yet
+    console.log(`Client ${clientName} is already ready.`);
+    res.status(200).json({ qrCodeData: '', Ready: clients[clientName].isWhatsAppReady });
   }
 });
+
+
 
 
 

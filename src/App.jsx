@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import FirstPage from "./Pages/FirstPage";
 import SendMessage from "./Components/SendMessage";
 import { LoginPage } from "./Pages/LoginPage";
-
+import { Test } from "./Components/Test";
 // Custom private route component
 const PrivateRoute = ({ element }) => {
   // Check if the user is logged in
@@ -33,6 +33,10 @@ const App = () => {
         <Route
           path="/qrcode"
           element={<PrivateRoute element={<FirstPage />} />}
+        />
+        <Route
+          path="/test"
+          element={<Test />}
         />
       </Routes>
     </div>
