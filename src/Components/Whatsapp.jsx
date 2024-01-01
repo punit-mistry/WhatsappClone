@@ -12,7 +12,7 @@ const Whatsapp = () => {
   const FetchAll = async () => {
     try {
       const Response = await axios.get(
-        `https://0b8a-203-122-54-18.ngrok-free.app/chat/history?clientName=${sessionStorage.getItem(
+        `http://localhost:3000/chat/history?clientName=${sessionStorage.getItem(
           "clientName"
         )}`,
         {
@@ -39,7 +39,7 @@ const Whatsapp = () => {
   const CallChats = async (a, name) => {
     setChatName({ name: name, number: a });
     const response = await axios.get(
-      `https://0b8a-203-122-54-18.ngrok-free.app/chat/messages/${sessionStorage.getItem(
+      `http://localhost:3000/chat/messages/${sessionStorage.getItem(
         "clientName"
       )}/${a}`,
       {

@@ -16,7 +16,7 @@ const FirstPage = () => {
       let config = {
         method: "post",
         maxBodyLength: Infinity,
-        url: "https://0b8a-203-122-54-18.ngrok-free.app/qrcode",
+        url: "http://localhost:3000/qrcode",
         headers: {
           "Content-Type": "application/json",
         },
@@ -45,11 +45,22 @@ const FirstPage = () => {
     FetchQrCode();
   }, []);
 
+  const DeleteFolder = async () => {
+    const response = await axios.get("http://localhost:3000/delete");
+    console.log(response.data);
+  };
+
   return (
     <div>
       {" "}
       {QrData != "Set Qr Code" && (
-        <div className="flex justify-center items-center h-[100vh]">
+        <div className="flex  flex-col gap-10 justify-center items-center h-[100vh]">
+          <button
+            className="border-2 rounded-lg p-2  font-bold hover:shadow-2xl"
+            onClick={DeleteFolder}
+          >
+            Refresh Data
+          </button>
           <QRCodeSVG
             value={QrData}
             size="500"

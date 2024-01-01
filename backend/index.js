@@ -1,12 +1,14 @@
 const express = require('express');
 const { Client,LocalAuth  } = require('whatsapp-web.js');
-const qrcode = require('qrcode-terminal');
-const QRCode = require('qrcode')
+const rimraf = require('rimraf');
+
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 const port = 3000;
 const Data = require('./Data')
+const fs = require('fs');
+const path = require('path');
 // Enable CORS for all routes
 app.use(cors());
 
@@ -30,6 +32,25 @@ app.post('/Login', async (req, res) => {
   }
 });
 
+app.get('/delete', async (req, res) => {
+  const folderNameToDelete = '.wwebjs_auth/session-Punit'; // Replace with the actual folder name
+
+  // Define the path to the folder
+  const folderPath = path.join(__dirname, folderNameToDelete);
+
+  try {
+    if (fs.existsSync(folderPath)) {
+        fs.rmdirSync(folderPath, { recursive: true });
+      rimraf.sync(folderPath);
+      res.status(200).json({ message: `Folder "${folderNameToDelete}" deleted successfully.` });
+    } else {
+      res.status(404).json({ message: `Folder "${folderNameToDelete}" not found.` });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'An error occurred while deleting the folder.' });
+  }
+});
 
 app.post('/qrcode', async (req, res) => {
   const { clientName } = req.body;

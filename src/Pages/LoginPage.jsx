@@ -19,10 +19,7 @@ export const LoginPage = () => {
 
     if (Data.userName !== "" && Data.Password !== "") {
       try {
-        const Response = await axios.post(
-          "https://0b8a-203-122-54-18.ngrok-free.app/login",
-          Data
-        );
+        const Response = await axios.post("http://localhost:3000/login", Data);
 
         if (Response.data.Message === "Login successful") {
           sessionStorage.setItem("clientName", Data.userName);

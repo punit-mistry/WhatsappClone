@@ -52,7 +52,7 @@ const SendMessage = () => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://0b8a-203-122-54-18.ngrok-free.app/send-message",
+      url: "http://localhost:3000/send-message",
       headers: {
         "Content-Type": "application/json",
       },
@@ -118,6 +118,7 @@ const SendMessage = () => {
 
     Data.forEach((res) => {
       const data = JSON.stringify({
+        clientName: sessionStorage.getItem("clientName"),
         message: res.message,
         DriverNumbers: res.DriverNumbers, // Access the number to send the message to
       });
@@ -127,7 +128,7 @@ const SendMessage = () => {
       const config = {
         method: "post",
         maxBodyLength: Infinity,
-        url: "https://0b8a-203-122-54-18.ngrok-free.app/send-message",
+        url: "http://localhost:3000/send-message",
         headers: {
           "Content-Type": "application/json",
         },
@@ -162,7 +163,7 @@ const SendMessage = () => {
     const config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://0b8a-203-122-54-18.ngrok-free.app/send-message",
+      url: "http://localhost:3000/send-message",
       headers: {
         "Content-Type": "application/json",
       },
