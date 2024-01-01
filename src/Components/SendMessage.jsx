@@ -128,7 +128,11 @@ const SendMessage = () => {
       const config = {
         method: "post",
         maxBodyLength: Infinity,
+<<<<<<< HEAD
         url: "http://localhost:3000/send-message",
+=======
+        url: "https://3a45-203-122-54-18.ngrok-free.app/send-message",
+>>>>>>> 4af6b89e35a5947efb3f65056edd084cec786911
         headers: {
           "Content-Type": "application/json",
         },
@@ -163,7 +167,11 @@ const SendMessage = () => {
     const config = {
       method: "post",
       maxBodyLength: Infinity,
+<<<<<<< HEAD
       url: "http://localhost:3000/send-message",
+=======
+      url: "https://3a45-203-122-54-18.ngrok-free.app/send-message",
+>>>>>>> 4af6b89e35a5947efb3f65056edd084cec786911
       headers: {
         "Content-Type": "application/json",
       },

@@ -39,7 +39,11 @@ const Whatsapp = () => {
   const CallChats = async (a, name) => {
     setChatName({ name: name, number: a });
     const response = await axios.get(
+<<<<<<< HEAD
       `http://localhost:3000/chat/messages/${sessionStorage.getItem(
+=======
+      `https://3a45-203-122-54-18.ngrok-free.app/chat/messages/${sessionStorage.getItem(
+>>>>>>> 4af6b89e35a5947efb3f65056edd084cec786911
         "clientName"
       )}/${a}`,
       {
